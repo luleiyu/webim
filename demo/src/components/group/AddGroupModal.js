@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { Input, Button, Row, Col, Form, Radio, Checkbox, message } from 'antd'
+import { Input, Button, Row, Col, Form, Radio, Checkbox, message, Switch } from 'antd'
 import GroupActions from '@/redux/GroupRedux'
 import { I18n } from 'react-redux-i18n'
 import _ from 'lodash'
@@ -32,7 +32,8 @@ class AddGroupModal extends React.Component {
                     members,
                     type,
                     canJoin,
-                    allowInvite = true
+                    allowInvite = true,
+                    confirm
                 } = values
                 if (!name) {
                     return message.error('Please input Group Name !', 1)
@@ -50,7 +51,7 @@ class AddGroupModal extends React.Component {
                         public: type === 'public',
                         approval: canJoin === 'yes',
                         allowinvites: allowInvite,
-                        inviteNeedConfirm: false
+                        inviteNeedConfirm: confirm
                         // invite_need_confirm // default: member
                     },
                     success: () => {
@@ -154,6 +155,12 @@ class AddGroupModal extends React.Component {
                                     {I18n.t('approvalFalse')}
                                 </Radio>
                             </RadioGroup>
+                        )}
+                    </FormItem>
+                    <FormItem style={{ marginBottom: 10 }}>
+                        <p>邀请确认</p>
+                        {getFieldDecorator('confirm', { valuePropName: "checked", initialValue: false })(
+                            <Switch checkedChildren="开启" unCheckedChildren="关闭" />
                         )}
                     </FormItem>
                     <div style={{ overflow: 'hidden' }}>

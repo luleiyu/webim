@@ -45,11 +45,11 @@ class GroupInviteModal extends React.Component {
         // 过滤一下groupRequests的id，防止相同的进群邀请
         const requests = []
         _.forEach(this.props.groupRequests, val => {
-            _.forEach(val, ({ from, status, toNick, reason, gid }) => {
+            _.forEach(val, ({ from, status, toNick, reason, gid, groupName }) => {
                 requests.push(
                     <Row key={from}>
                         <Col span={14}>
-                            {`${from}${I18n.t('inviteIntoGroup')}${gid}`}
+                            {`${from}${I18n.t('inviteIntoGroup')}${groupName} 群id: ${gid}`}
                             <p>
                                 {reason}
                             </p>

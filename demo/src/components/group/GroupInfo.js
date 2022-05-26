@@ -8,7 +8,7 @@ import GroupActions from '@/redux/GroupRedux'
 import GroupMemberActions from '@/redux/GroupMemberRedux'
 import './style/index.less'
 import { history } from '@/utils'
-
+import Axios from 'axios'
 const iconStyle = { fontSize: 16 }
 
 const GroupInfoForm = Form.create()(props => {
@@ -195,6 +195,38 @@ class GroupInfo extends React.Component {
             </Menu>
         }
     }
+
+    handlerPost = (options) => {
+        Axios({
+            method: 'post',
+            headers: {
+                'Authorization': 'Bearer YWMtIrtO3NvcEeybAdNqjkTiHgAAAAAAAAAAAAAAAAAAAAExCXvf5bRGAJBgXNYFJVQ9AQMAAAGA-UtYuwBPGgB9ym8onqxg6wj0-3ScPvLlOA_DF4mbpVT_j2lB291Y_Q',
+                'Content-Type': 'text/plain'
+            },
+            data: options.data,
+            url: options.url,
+        }).then(res => {
+            console.log(res, 'post')
+        })
+    }
+    handlerMuteGroup = (num) => {
+        // curl --location -g --request POST 'https://a1-hsb.easemob.com/easemob-demo/chong-easemob/chatgroups/182071529111553/disable' \
+        // --header 'Authorization: Bearer YWMtIrtO3NvcEeybAdNqjkTiHgAAAAAAAAAAAAAAAAAAAAExCXvf5bRGAJBgXNYFJVQ9AQMAAAGA-UtYuwBPGgB9ym8onqxg6wj0-3ScPvLlOA_DF4mbpVT_j2lB291Y_Q' \
+        // --header 'Content-Type: text/plain' \
+        // --data-raw '{
+        //     "disable_expire":1000000
+        // }'
+        console.log(num)
+        const groupId = this.props.room.groupId
+        let url = `https://a1-hsb.easemob.com/easemob-demo/chong-easemob/chatgroups/${groupId}/`
+        if (num) {
+            url = url + 'enable'
+            this.handlerPost({ url, data: '' })
+        } else {
+            url = url + 'disable'
+            this.handlerPost({ url, data: { disable_expire: 1000000 } })
+        }
+    }
     render() {
         const {
             title,
@@ -263,6 +295,10 @@ class GroupInfo extends React.Component {
                 <p className="gray fs-117em">
                     {this.props.room.groupName}
                 </p>
+                <div>
+                    <Button onClick={() => this.handlerMuteGroup(0)}>禁言</Button>
+                    <Button onClick={() => this.handlerMuteGroup(1)}>取消</Button>
+                </div>
                 {/* <h3>Group Description</h3>
             <p className='gray fs-117em'>{this.props.room.description}</p> */}
 

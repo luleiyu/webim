@@ -616,7 +616,11 @@ WebIM.conn.listen({
         }
     }
 })
-
+WebIM.conn.addEventHandler('disableGroup', {
+    onGroupChange: msg => {
+        console.log('onGroupChange', msg)
+    }
+})
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
