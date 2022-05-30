@@ -295,10 +295,10 @@ class GroupInfo extends React.Component {
                 <p className="gray fs-117em">
                     {this.props.room.groupName}
                 </p>
-                <div>
+                {/* <div>
                     <Button onClick={() => this.handlerMuteGroup(0)}>禁言</Button>
                     <Button onClick={() => this.handlerMuteGroup(1)}>取消</Button>
-                </div>
+                </div> */}
                 {/* <h3>Group Description</h3>
             <p className='gray fs-117em'>{this.props.room.description}</p> */}
 
