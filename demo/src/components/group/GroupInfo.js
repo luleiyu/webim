@@ -286,11 +286,15 @@ class GroupInfo extends React.Component {
             >
                 <h3>
                     {I18n.t('groupName')}
-                    <span className="fr">
-                        <Dropdown overlay={menu} trigger={[ 'click' ]}>
-                            <Icon type="setting" style={iconStyle} />
-                        </Dropdown>
-                    </span>
+                    {
+                        !this.props.group.byId[room.groupId].disabled ? 
+                            <span className="fr">
+                                <Dropdown overlay={menu} trigger={[ 'click' ]}>
+                                    <Icon type="setting" style={iconStyle} />
+                                </Dropdown>
+                            </span>
+                            : null
+                    }
                 </h3>
                 <p className="gray fs-117em">
                     {this.props.room.groupName}

@@ -10,7 +10,8 @@ const { Types, Creators } = createActions({
     getChatRoomAlready: null,
     setShowGroupRequestModal: [ 'status' ],
     setShowGroupInviteModal: [ 'status' ],
-    setActiveContact: [ 'chatType', 'contact' ]
+    setActiveContact: [ 'chatType', 'contact' ],
+    setDisabled: [ 'disabled' ],
 })
 
 export const CommonTypes = Types
@@ -57,7 +58,6 @@ export const setShowGroupInviteModal = (state, { status }) => {
 export const setActiveContact = (state, { chatType, contact }) => {
     return state.merge({ activeChatType: chatType, activeContact: contact })
 }
-
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {

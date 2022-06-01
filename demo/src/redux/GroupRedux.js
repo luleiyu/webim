@@ -166,9 +166,10 @@ export const updateGroup = (state, { groups }) => {
         // byId[v.groupid] = v
         byId[v.groupid] = {
             groupId: v.groupid,
-            groupName: v.groupname
+            groupName: v.groupname,
+            disabled: v.disabled === 'false' ? false : true
         }
-        names.push(v.groupname + '_#-#_' + v.groupid)
+        names.push(v.groupname + '_#-#_' + v.groupid + '_#-#_' + v.disabled)
     })
     return state.merge({
         byId,

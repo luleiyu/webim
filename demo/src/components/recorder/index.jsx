@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Modal, Button } from 'antd'
+import { Modal, Button, message } from 'antd'
 import recording from './recordAudio.js'
 import './index.less'
 import PropTypes from 'prop-types'
 import WebIM from '@/config/WebIM'
+import { I18n } from 'react-redux-i18n'
+const Message = message
 
 import MessageActions from '@/redux/MessageRedux'
 const chatType = {
@@ -133,6 +135,9 @@ export default class RecordAudio extends Component {
             // 发送语音功能
             if (type === 'audio') {
                 const { selectItem, selectTab } = this.props.match.params
+                if (chatType[selectTab] == 'groupchat' && this.props.disabled) {
+                    return Message.error(`${I18n.t('groupDisabled')}`)
+                }
                 let uri = {
                     url: WebIM.utils.parseDownloadResponse.call(WebIM.conn, blob),
                     filename: 'audio.wav',

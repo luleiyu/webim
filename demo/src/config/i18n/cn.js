@@ -130,4 +130,5 @@ export const cn = {
     port: '端口号',
     restServerAddress: 'REST服务器地址',
     settingSuccess: '保存成功',
+    groupDisabled: '群组禁用'
 }

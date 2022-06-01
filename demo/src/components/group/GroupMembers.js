@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { I18n } from 'react-redux-i18n'
 import GroupActions from '@/redux/GroupRedux'
 import GroupMemberActions from '@/redux/GroupMemberRedux'
+import CommonActions from '@/redux/CommonRedux'
 import './style/index.less'
 
 const iconStyle = { fontSize: 16, marginRight: 15 }
@@ -149,7 +150,7 @@ class GroupMembers extends React.Component {
                 </Menu> */}
                 <Table
                     columns={columns}
-                    dataSource={data}
+                    dataSource={!this.props.group.byId[roomId].disabled ? data : []}
                     showHeader={false}
                     pagination={false}
                     scroll={{ y: 300 }}
@@ -163,7 +164,8 @@ class GroupMembers extends React.Component {
 export default connect(
     ({ entities, login }) => ({ 
         login, 
-        groupMember: entities.groupMember 
+        groupMember: entities.groupMember,
+        group: entities.group,
     }),
     dispatch => ({
         listGroupMemberAsync: opt => dispatch(GroupMemberActions.listGroupMemberAsync(opt)),

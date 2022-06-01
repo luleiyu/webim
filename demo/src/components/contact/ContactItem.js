@@ -12,13 +12,13 @@ const ContactItem = ({ chatType, items, collapse, hasLogo, ...rest }) => {
     const tabCls = collapse ? '' : ''
 
     const tabsItem = tabs.map(item =>
-        <Menu.Item key={chatType == 'chatroom' || chatType == 'group' ? item.id : item.name} className={tabCls} style={{margin:0}}>
+        <Menu.Item key={chatType == 'chatroom' || chatType == 'group' ? item.id : item.name} className={tabCls} style={{ margin:0 }}>
             {hasLogo ? <ContactHead className="fl nav-img" name="test" width={50} /> : ''}
             <div className="nav-text">
                 <div>
                     {chatType == 'contact' ? 
-                    <Avatar src={item.info.avatarurl||defaultAvatar} onClick={rest.onClickAvatar}/>:null}
-                    <span style={{marginLeft: '5px'}}>{item?.info?.nickname || item.name}</span>
+                        <Avatar src={item.info.avatarurl||defaultAvatar} onClick={rest.onClickAvatar}/>:null}
+                    <span style={{ marginLeft: '5px' }}>{item?.info?.nickname || item.name}</span>
                     {/*
                         <Badge
                         count={109}
@@ -31,13 +31,16 @@ const ContactItem = ({ chatType, items, collapse, hasLogo, ...rest }) => {
                     */}
                     {/* {chatType === "group" ? <Badge count={item.unread} style={{ marginLeft: 10 }} /> : ""} */}
                     <Badge count={item.unread} style={{ marginLeft: 10 }} />
+                    {
+                        chatType === 'group' ? <div className='disabled-text'>isDisabled: {item.isDisabled}</div> : null
+                    }
                 </div>
                 <div className="nav-text-desc">
-                    {item.latestMessage}
+                    { (item.isDisabled === 0 && chatType === 'group') ? item.latestMessage : null}
                 </div>
             </div>
             <div className="nav-op">
-                {item.latestTime}
+                {(item.isDisabled === 0 && chatType === 'group') ? item.latestTime : null}
             </div>
         </Menu.Item>
     )

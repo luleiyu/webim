@@ -85,6 +85,9 @@ class Chat extends React.Component {
     pictureChange(e) {
         const { match } = this.props
         const { selectItem, selectTab } = match.params
+        if (chatType[selectTab] == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+            return Message.error(`${I18n.t('groupDisabled')}`)
+        }
         const isRoom = chatType[selectTab] == 'chatroom' || chatType[selectTab] == 'groupchat'
 
         let file = WebIM.utils.getFileUrl(e.target)
@@ -108,6 +111,9 @@ class Chat extends React.Component {
     fileChange(e) {
         const { match } = this.props
         const { selectItem, selectTab } = match.params
+        if (chatType[selectTab] == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+            return Message.error(`${I18n.t('groupDisabled')}`)
+        }
         const isRoom = chatType[selectTab] == 'chatroom' || chatType[selectTab] == 'groupchat'
 
         let file = WebIM.utils.getFileUrl(e.target)
@@ -172,6 +178,9 @@ class Chat extends React.Component {
             message
         } = this.props
         const { selectItem, selectTab } = match.params
+        if (chatType[selectTab] == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+            return Message.error(`${I18n.t('groupDisabled')}`)
+        }
         const { value } = this.state
         if (!value) return
         this.props.sendTxtMessage(chatType[selectTab], selectItem, {
@@ -247,6 +256,9 @@ class Chat extends React.Component {
     onMenuContactClick({ key }) {
         const { match } = this.props
         const { selectItem, selectTab } = match.params
+        if (chatType[selectTab] == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+            return Message.error(`${I18n.t('groupDisabled')}`)
+        }
         const search = history.location.search
         switch (key) {
         case '0':
@@ -277,6 +289,9 @@ class Chat extends React.Component {
         const { selectItem, selectTab } = _.get(this.props, [ 'match', 'params' ], {})
         const chatTypes = { 'contact': 'chat', 'group': 'groupchat', 'chatroom': 'chatroom', 'stranger': 'stranger' }
         const chatType = chatTypes[selectTab]
+        if (chatType == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+            return Message.error(`${I18n.t('groupDisabled')}`)
+        }
         this.props.clearMessage(chatType, selectItem)
     }
 
@@ -316,6 +331,9 @@ class Chat extends React.Component {
             message
         } = this.props
         const { selectItem, selectTab } = match.params
+        if (chatType[selectTab] == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+            return Message.error(`${I18n.t('groupDisabled')}`)
+        }
         const value = '邀请您进行视频通话'
         const callId = WebIM.conn.getUniqueId().toString();
         const channelName = Math.uuid(8)
@@ -375,6 +393,9 @@ class Chat extends React.Component {
             return Message.error('正在通话中')
         }
         const { selectItem, selectTab } = match.params
+        if (chatType[selectTab] == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+            return Message.error(`${I18n.t('groupDisabled')}`)
+        }
         const value = '邀请您进行语音通话'
 
         const callId = WebIM.conn.getUniqueId().toString();
@@ -418,7 +439,9 @@ class Chat extends React.Component {
                 const { selectItem, selectTab } = _.get(_this.props, [ 'match', 'params' ], {})
                 const chatTypes = { 'contact': 'chat', 'group': 'groupchat', 'chatroom': 'chatroom', 'stranger': 'stranger' }
                 const chatType = chatTypes[selectTab]
-
+                if (chatType[selectTab] == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+                    return Message.error(`${I18n.t('groupDisabled')}`)
+                }
                 // load more history message
                 _this.props.fetchMessage(selectItem, chatType, offset, (res) => {
 
@@ -462,7 +485,9 @@ class Chat extends React.Component {
         } else {
             chatType = 'chatroom'
         }
-
+        if (chatType == 'groupchat' && this.props.entities.group.byId[selectItem].disabled) {
+            return Message.error(`${I18n.t('groupDisabled')}`)
+        }
 
         let userId = this.state.checkedValue
         
@@ -664,7 +689,7 @@ class Chat extends React.Component {
                         </label>
                         {/* webrtc video && audio && 发送音频 */}
                         {webrtcButtons}
-                        {WebIM.config.isWebRTC && <RecordAudio match={match}/>}
+                        {WebIM.config.isWebRTC && <RecordAudio match={match} disabled={selectTab === 'group' && this.props.entities.group.byId[selectItem]?.disabled} />}
                         {/* clear */}
                         <label htmlFor="clearMessage" className="x-chat-ops-icon ib" onClick={this.onClearMessage}>
                             <i className="icon iconfont icon-trash"></i>

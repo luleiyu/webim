@@ -619,6 +619,10 @@ WebIM.conn.listen({
 WebIM.conn.addEventHandler('disableGroup', {
     onGroupChange: msg => {
         console.log('onGroupChange', msg)
+        store.dispatch(GroupActions.getGroups())
+        if (msg.type === 'ableGroup') {
+            store.dispatch(GroupMemberActions.listGroupMemberAsync({groupId: msg.gid}))
+        }
     }
 })
 /* ------------- Types and Action Creators ------------- */

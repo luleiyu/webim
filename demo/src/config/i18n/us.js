@@ -128,4 +128,5 @@ export const us = {
     port: 'Port',
     restServerAddress: 'REST Server Address',
     settingSuccess: 'Setting Success',
+    groupDisabled: 'Group Is Disabled'
 }

@@ -48,7 +48,7 @@ const Contact = ({ history, match, common, location, contacts, group, chatroom, 
             getGroups()
         } else {
             _.forEach(_.get(contacts, "names", []), (v, index) => {
-                const [ name, id ] = v.split("_#-#_")
+                const [ name, id, disabled ] = v.split("_#-#_")
                 const info = utils.getLatestMessage(_.get(message, [ chatTypes[chatType], id ], []))
                 const count = message.getIn([ "unread", "groupchat", name ], 0)
                 items[index] = {
@@ -57,6 +57,7 @@ const Contact = ({ history, match, common, location, contacts, group, chatroom, 
                     unread: count,
                     latestMessage: "",
                     latestTime: "",
+                    isDisabled: disabled === 'false' ? 0 : 1,
                     ...info
                 }
             })
